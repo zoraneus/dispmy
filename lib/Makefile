@@ -2,62 +2,85 @@
 ## EPITECH PROJECT, 2018
 ## Makefile
 ## File description:
-## makefile for libmy
+## Compiles the libmy.a library binary
 ##
 
-SRC	=	my_display/my_putchar.c \
-		my_display/my_put_errchar.c \
-		my_display/my_put_errstr.c \
-		my_display/my_putfloat.c \
-		my_display/my_putnbr.c \
-		my_display/my_putstr.c \
-		my_math/my_atoi.c \
-		my_math/my_itoa.c \
-		my_math/my_pow.c \
-		my_math/my_sqrt.c \
-		my_math/my_minmax.c \
-		my_memory/my_smalloc.c \
-		my_str/my_char_is.c \
-		my_str/my_getnbr.c \
-		my_str/my_revstr.c \
-		my_str/my_strcat.c \
-		my_str/my_strcat.c \
-		my_str/my_strcmp.c \
-		my_str/my_strcpy.c \
-		my_str/my_strdup.c \
-		my_str/my_str_isneg.c \
-		my_str/my_str_isnum.c \
-		my_str/my_strlen.c \
-		my_str/my_strreplace.c \
-		my_str/my_strstr.c \
-		my_str/my_count_line.c \
-		my_str/my_line_lenght.c \
-		my_str/my_str_to_line_arr.c \
-		my_str/my_line_lenght.c \
-		my_str/my_str_to_word_arr.c \
-		my_fs/my_file_readall.c \
-		my_fs/my_file_size.c \
-		my_fs/my_open.c \
-		my_chained/my_chained_debug.c \
-		my_chained/simple_chain.c \
-		my_chained/double_chain.c \
-		my_vector/my_simple_vector_basics.c \
-		my_vector/my_vector_debug.c
+ECHO	=	/bin/echo -e
+DEFAULT	=	"\e[0m"
+BOLD_T	=	"\e[1m"
+DIM_T	=	"\e[2m"
+UNDLN_T	=	"\e[4m"
+BLACK_C	=	"\e[30m"
+RED_C	=	"\e[31m"
+GREEN_C	=	"\e[32m"
+YELLO_C	=	"\e[33m"
+BLUE_C	=	"\e[34m"
+MAGEN_C	=	"\e[35m"
+CYAN_C	=	"\e[36m"
+DEFAULT_C	=	"\e[39m"
+LIGHT_RED	=	"\e[91m"
+LIGHT_GREEN	=	"\e[92m"
+LIGHT_YELLO	=	"\e[93m"
+LIGHT_BLUE	=	"\e[94m"
+LIGHT_MAGEN	=	"\e[95m"
+LIGHT_CYAN	=	"\e[96m"
+LINE_RETURN	=	$(ECHO) ""
 
-OBJ	=	$(SRC:.c=.o)
+NAME	=	dispmy
+COLOR_THEME	=	$(MAGEN_C)
+MY_PATH	=	.
+INCLUDE_PATH	=	../include
 
-CFLAGS	=	-W -Wall -Wextra -I ../include/ -c
+SRC_MY	=	src/my_put_errchar.c \
+			src/my_put_errstr.c \
+			src/my_putchar.c \
+			src/my_putfloat.c \
+			src/my_putnbr.c \
+			src/my_putstr.c 
 
-NAME	=	my/libmy.a
+CFLAGS	=	-Wall \
+			-W \
+			-Werror \
+			-I $(INCLUDE_PATH)
 
-all:
-	gcc $(SRC) $(CFLAGS)
-	ar rc $(NAME) *.o
+SRCS	=	$(SRC_MY:%=$(MY_PATH)/%)
+
+OBJ	=	$(SRCS:.c=.o)
+
+all:	message $(NAME)
+
+$(NAME):	$(OBJ)
+	@ar rc ./lib$(NAME).a $(OBJ) && \
+		$(ECHO) $(BOLD_T)$(GREEN_C)"\nCOMPILED:" $(DEFAULT)$(LIGHT_GREEN) "lib$(NAME).a\n" $(DEFAULT) || \
+		$(ECHO) $(RED_C)$(UNDLN_T)$(BOLD_T)"BUILD FAILED:" $(LIGHT_RED) "lib$(NAME).a"$(DEFAULT)"\n"
+
+message:
+	@$(LINE_RETURN)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  ________  .___  ___________________     _____         " $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  \______ \ |   |/   _____/\______   \   /     \ ___.__." $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"   |    |  \|   |\_____  \  |     ___/  /  \ /  <   |  |" $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"   |    `   \   |/        \ |    |     /    Y    \___  |" $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  /_______  /___/_______  / |____|     \____|__  / ____|" $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"          \/            \/                     \/\/     " $(DEFAULT)
+	@$(LINE_RETURN)
 
 clean:
-	rm -f *.o
+	@$(RM) $(OBJ)
+	@$(ECHO) $(RED_C)$(DIM_T)"[clean]  "$(DEFAULT) \
+		$(RED_C)$(BOLD_T)"DELETED: "$(DEFAULT) \
+		$(LIGHT_RED)"lib$(NAME)'s object files"$(DEFAULT)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:	clean
+	@$(RM) ./lib$(NAME).a
+	@$(ECHO) $(RED_C)$(DIM_T)"[fclean] "$(DEFAULT) \
+		$(RED_C)$(BOLD_T)"DELETED: "$(DEFAULT) \
+		$(LIGHT_RED)"Binary lib$(NAME).a"$(DEFAULT)
 
-re: fclean all
+re:		fclean all
+
+%.o: %.c
+	@$(CC) -c $(CFLAGS) -o $@ $< && \
+		$(ECHO) $(DIM_T) "cc $(CFLAGS) -c "$<$(COLOR_THEME)" -o "$@ $(DEFAULT) || \
+		$(ECHO) "\n"$(MAGEN_C) $(UNDLN_T)$(BOLD_T)"cc $(CFLAGS) -c "$<" -o "$@$(DEFAULT)"\n"
+
+.PHONY: all $(NAME) message clean fclean re
