@@ -36,7 +36,7 @@ SRC_MY	=	src/my_put_errchar.c \
 			src/my_putchar.c \
 			src/my_putfloat.c \
 			src/my_putnbr.c \
-			src/my_putstr.c 
+			src/my_putstr.c
 
 CFLAGS	=	-Wall \
 			-W \
@@ -59,7 +59,7 @@ message:
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  ________  .___  ___________________     _____         " $(DEFAULT)
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  \______ \ |   |/   _____/\______   \   /     \ ___.__." $(DEFAULT)
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"   |    |  \|   |\_____  \  |     ___/  /  \ /  <   |  |" $(DEFAULT)
-	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"   |    `   \   |/        \ |    |     /    Y    \___  |" $(DEFAULT)
+	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"   |        \   |/        \ |    |     /    Y    \___  |" $(DEFAULT)
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  /_______  /___/_______  / |____|     \____|__  / ____|" $(DEFAULT)
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"          \/            \/                     \/\/     " $(DEFAULT)
 	@$(LINE_RETURN)
