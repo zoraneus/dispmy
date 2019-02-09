@@ -5,7 +5,7 @@
 ** display an char
 */
 
-#include "my.h"
+#include "my_display.h"
 
 void my_putchar(char c)
 {

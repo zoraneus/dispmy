@@ -5,7 +5,7 @@
 ** display an char on err output
 */
 
-#include "my.h"
+#include "my_display.h"
 
 void my_put_errchar(char c)
 {

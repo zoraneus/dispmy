@@ -4,7 +4,7 @@
 ** File description:
 ** put an str on the standard err output
 */
-#include "my.h"
+#include "my_display.h"
 
 void my_put_errstr(char const *str)
 {

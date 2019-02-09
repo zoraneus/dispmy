@@ -5,7 +5,7 @@
 ** function for display an entire str
 */
 
-#include "my.h"
+#include "my_display.h"
 
 void my_putstr(char const *str)
 {

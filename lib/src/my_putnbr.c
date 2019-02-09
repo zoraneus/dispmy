@@ -5,7 +5,7 @@
 ** display all value of an int
 */
 
-#include "my.h"
+#include "my_display.h"
 
 int my_putnbr(int nb)
 {
