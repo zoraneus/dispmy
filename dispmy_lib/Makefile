@@ -1,8 +1,8 @@
 ##
 ## EPITECH PROJECT, 2018
-## Makefile
+## Fairefichier
 ## File description:
-## Compiles the libmy.a library binary
+## This is a fairefichier
 ##
 
 ECHO	=	/bin/echo -e
@@ -26,12 +26,13 @@ LIGHT_MAGEN	=	"\e[95m"
 LIGHT_CYAN	=	"\e[96m"
 LINE_RETURN	=	$(ECHO) ""
 
-NAME	=	dispmy
-COLOR_THEME	=	$(MAGEN_C)
-MY_PATH	=	.
+NAME	=	my
+COLOR_THEME	=	$(YELLO_C)
+DEBUG_THEME =	$(CYAN_C)
+SRC_PATH	=	./
 INCLUDE_PATH	=	../include
 
-SRC_MY	=	src/my_put_errchar.c \
+SRC		=	src/my_put_errchar.c \
 			src/my_put_errstr.c \
 			src/my_putchar.c \
 			src/my_putfloat.c \
@@ -39,20 +40,16 @@ SRC_MY	=	src/my_put_errchar.c \
 			src/my_putstr.c
 
 CFLAGS	=	-Wall \
-			-W \
-			-Werror \
+			-Wextra \
 			-I $(INCLUDE_PATH)
 
-SRCS	=	$(SRC_MY:%=$(MY_PATH)/%)
+DEBUG_FLAGS	=	-g3 -gdwarf-4
+
+SRCS	=	$(SRC:%=$(SRC_PATH)/%)
 
 OBJ	=	$(SRCS:.c=.o)
 
 all:	message $(NAME)
-
-$(NAME):	$(OBJ)
-	@ar rc ./lib$(NAME).a $(OBJ) && \
-		$(ECHO) $(BOLD_T)$(GREEN_C)"\nCOMPILED:" $(DEFAULT)$(LIGHT_GREEN) "lib$(NAME).a\n" $(DEFAULT) || \
-		$(ECHO) $(RED_C)$(UNDLN_T)$(BOLD_T)"BUILD FAILED:" $(LIGHT_RED) "lib$(NAME).a"$(DEFAULT)"\n"
 
 message:
 	@$(LINE_RETURN)
@@ -63,6 +60,11 @@ message:
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"  /_______  /___/_______  / |____|     \____|__  / ____|" $(DEFAULT)
 	@$(ECHO) $(BOLD_T)$(COLOR_THEME)"          \/            \/                     \/\/     " $(DEFAULT)
 	@$(LINE_RETURN)
+
+$(NAME):	$(OBJ)
+	@ar rc ./lib$(NAME).a $(OBJ) && \
+		$(ECHO) $(BOLD_T)$(GREEN_C)"\n[✔] COMPILED:" $(DEFAULT)$(LIGHT_GREEN) "lib$(NAME).a" $(DEFAULT) || \
+		$(ECHO) $(RED_C)$(BOLD_T)"[✘] "$(UNDLN_T)"BUILD FAILED:" $(LIGHT_RED) "lib$(NAME).a"$(DEFAULT)
 
 clean:
 	@$(RM) $(OBJ)
@@ -78,9 +80,13 @@ fclean:	clean
 
 re:		fclean all
 
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: COLOR_THEME = $(DEBUG_THEME)
+debug: fclean all
+
 %.o: %.c
 	@$(CC) -c $(CFLAGS) -o $@ $< && \
-		$(ECHO) $(DIM_T) "cc $(CFLAGS) -c "$<$(COLOR_THEME)" -o "$@ $(DEFAULT) || \
+		$(ECHO) $(DIM_T) "cc $(CFLAGS) -c "$<$(COLOR_THEME)$(BOLD_T)" -o "$@ $(DEFAULT) || \
 		$(ECHO) "\n"$(MAGEN_C) $(UNDLN_T)$(BOLD_T)"cc $(CFLAGS) -c "$<" -o "$@$(DEFAULT)"\n"
 
-.PHONY: all $(NAME) message clean fclean re
+.PHONY: all $(NAME) message clean fclean re debug
